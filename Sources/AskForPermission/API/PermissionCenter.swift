@@ -49,6 +49,9 @@ public final class PermissionCenter {
         PermissionsListWindow(state: state, flow: flow)
     }
 
+    var statusState: PermissionStatusModel { state }
+    var requestFlow: PermissionRequestFlowController { flow }
+
     private static func resolveHostApplicationBundle() throws -> URL {
         let bundleURL = Bundle.main.bundleURL.standardizedFileURL
         if bundleURL.pathExtension == "app" { return bundleURL }

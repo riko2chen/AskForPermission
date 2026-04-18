@@ -27,6 +27,26 @@
 - 飞行两端无视觉空档（replicant 就位后源行才翻到 dashed 态）
 - 系统设置关闭或从 Dock 复原时，会等窗口 frame 稳定后再计算目标位置
 
+## 跑 example
+
+clone 下来后，仓库自带一个 example app，在一个带 tab 的窗口里演示每一种接入方式（内置窗口 / SwiftUI / AppKit）。
+
+```bash
+git clone https://github.com/riko2chen/AskForPermission.git
+cd AskForPermission
+./Examples/AskForPermissionExample/build.sh
+open Examples/AskForPermissionExample/build/AskForPermissionExample.app
+```
+
+环境要求：macOS 13+、Xcode 15+（提供 Swift 5.9 工具链）。构建脚本会在 `Examples/AskForPermissionExample/build/` 下产出一个已签名的 `.app`，不需要 Xcode 工程。
+
+反复测试时重置 TCC 授权：
+
+```bash
+tccutil reset All com.example.askforpermission.example
+killall AskForPermissionExample 2>/dev/null
+```
+
 ## 最简接入
 
 ```swift

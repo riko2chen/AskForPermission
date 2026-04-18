@@ -27,6 +27,26 @@ The flow mirrors the Codex Computer Use onboarding experience visually and behav
 - No visual gap at either end of the flight (the source row only flips to its dashed placeholder once the replicant is in position)
 - Cold-launch / restore from Dock: waits for the Settings window frame to stabilise before computing the target position
 
+## Try the example
+
+After cloning, the bundled example app demonstrates every entry point (built-in window, SwiftUI surface, and AppKit convenience) in a single tabbed window.
+
+```bash
+git clone https://github.com/riko2chen/AskForPermission.git
+cd AskForPermission
+./Examples/AskForPermissionExample/build.sh
+open Examples/AskForPermissionExample/build/AskForPermissionExample.app
+```
+
+Requirements: macOS 13 or later, Xcode 15+ (for Swift 5.9 toolchain). The build script produces a signed `.app` in `Examples/AskForPermissionExample/build/` — no Xcode project needed.
+
+To reset the example's TCC grants between runs:
+
+```bash
+tccutil reset All com.example.askforpermission.example
+killall AskForPermissionExample 2>/dev/null
+```
+
 ## Minimal integration
 
 ```swift

@@ -172,7 +172,11 @@ final class PermissionRequestFlowController {
             // so the row reverts to the initial CTA button layout.
             panel.orderOut(nil)
             replicant.orderOut(nil)
-            let granted = await pollUntilGranted(kind: kind, state: state, timeout: .seconds(60))
+            let granted = await TCCPromptWatcher.waitForResolution(
+                kind: kind,
+                state: state,
+                timeout: .seconds(10)
+            )
             clearActiveState()
             return granted ? .authorized : .timedOut
         }
@@ -189,21 +193,6 @@ final class PermissionRequestFlowController {
         await withCheckedContinuation { (continuation: CheckedContinuation<DragOutcome, Never>) in
             self.dragContinuation = continuation
         }
-    }
-
-    private func pollUntilGranted(
-        kind: PermissionKind,
-        state: PermissionStatusModel,
-        timeout: Duration
-    ) async -> Bool {
-        let clock = ContinuousClock()
-        let deadline = clock.now + timeout
-        while clock.now < deadline {
-            state.refresh()
-            if state.isGranted(kind) { return true }
-            try? await Task.sleep(for: .milliseconds(120))
-        }
-        return false
     }
 
     // MARK: - Geometry

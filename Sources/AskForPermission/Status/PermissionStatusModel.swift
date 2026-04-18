@@ -35,6 +35,13 @@ final class PermissionStatusModel: ObservableObject {
         if sc != isScreenRecordingGranted { isScreenRecordingGranted = sc }
     }
 
+    func publisher(for kind: PermissionKind) -> AnyPublisher<Bool, Never> {
+        switch kind {
+        case .accessibility: return $isAccessibilityGranted.eraseToAnyPublisher()
+        case .screenRecording: return $isScreenRecordingGranted.eraseToAnyPublisher()
+        }
+    }
+
     private func startPolling() {
         timer = Timer.scheduledTimer(withTimeInterval: 0.75, repeats: true) { [weak self] _ in
             Task { @MainActor in self?.refresh() }
