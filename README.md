@@ -8,8 +8,6 @@ For macOS app developers who need either of these two TCC permissions.
 
 ![Demo](docs/assets/demo.gif)
 
-> Placeholder. Replace with a real screen recording of the flow.
-
 ## Compared to Codex Computer Use
 
 The flow mirrors the Codex Computer Use onboarding experience visually and behaviourally. Implementation choices differ on a few axes.

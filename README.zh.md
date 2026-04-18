@@ -8,8 +8,6 @@
 
 ![演示](docs/assets/demo.gif)
 
-> 占位图，之后替换成实际录屏。
-
 ## 和 Codex Computer Use 的对照
 
 在视觉和交互上对齐 Codex Computer Use 的权限引导体验。实现层面在几个点上做了不同的取舍。
