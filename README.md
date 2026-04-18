@@ -55,17 +55,17 @@ import AskForPermission
 
 @MainActor
 final class AppDelegate: NSObject, NSApplicationDelegate {
-    private var center: PermissionCenter?
+    private var controller: NSWindowController?
 
     func applicationDidFinishLaunching(_ notification: Notification) {
-        let center = try? PermissionCenter(appName: "My App")
-        self.center = center
-        center?.makePermissionsWindow().makeKeyAndOrderFront(nil)
+        AskForPermission.configure(appName: "My App")
+        controller = AskForPermission.permissionsWindowController()
+        controller?.showWindow(nil)
     }
 }
 ```
 
-This drops the built-in permissions window into your app. For a button-driven single-permission request, see [docs/api.md](docs/api.md).
+This drops the built-in permissions window into your app. For SwiftUI hosts, use the `PermissionsView` view directly, or attach `.requestsPermission(_:)` / `.askForPermission(item:)` to your own buttons. For a button-driven single-permission request from AppKit, call `AskForPermission.request(_:from: NSButton)`. See [docs/api.md](docs/api.md) for the full surface.
 
 ## Documentation
 

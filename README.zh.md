@@ -55,17 +55,17 @@ import AskForPermission
 
 @MainActor
 final class AppDelegate: NSObject, NSApplicationDelegate {
-    private var center: PermissionCenter?
+    private var controller: NSWindowController?
 
     func applicationDidFinishLaunching(_ notification: Notification) {
-        let center = try? PermissionCenter(appName: "My App")
-        self.center = center
-        center?.makePermissionsWindow().makeKeyAndOrderFront(nil)
+        AskForPermission.configure(appName: "My App")
+        controller = AskForPermission.permissionsWindowController()
+        controller?.showWindow(nil)
     }
 }
 ```
 
-这一段直接把内置的权限列表窗口放进 app 里。如果只想从某个按钮触发单个权限的请求，看 [docs/api.md](docs/api.md)。
+这一段直接把内置的权限列表窗口放进 app 里。SwiftUI 宿主可以直接用 `PermissionsView`，或者在自己的按钮上挂 `.requestsPermission(_:)` / `.askForPermission(item:)`。AppKit 下想从某个按钮触发单个权限的请求，用 `AskForPermission.request(_:from: NSButton)`。完整 API 看 [docs/api.md](docs/api.md)。
 
 ## 文档
 
