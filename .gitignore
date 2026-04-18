@@ -1,0 +1,19 @@
+.DS_Store
+
+# Swift build artefacts
+.build/
+.swiftpm/
+*.xcodeproj/xcuserdata/
+*.xcodeproj/project.xcworkspace/xcuserdata/
+Examples/**/build/
+
+# Editor scratch
+*.swp
+*.swo
+.idea/
+.vscode/
+
+# Local Claude Code state
+.claude/
+CLAUDE.md
+AGENTS.md
