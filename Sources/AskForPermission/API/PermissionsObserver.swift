@@ -1,31 +1,41 @@
 import Combine
 import Foundation
 
-/// SwiftUI-friendly wrapper around the shared permission state. Publishes
-/// each permission as its own `@Published` property so views can read what
-/// they need without touching the underlying state model.
-///
-/// The observer reads from the shared `AskForPermission` center. When
-/// `AskForPermission.isAvailable` is `false` (non-bundled host), both
-/// properties stay at `false` and never update.
+/// SwiftUI-friendly wrapper around the shared permission state; in a non-bundled host, all six properties stay `false` and never update.
 @MainActor
 public final class PermissionsObserver: ObservableObject {
     @Published public private(set) var accessibility: Bool = false
     @Published public private(set) var screenRecording: Bool = false
+    @Published public private(set) var inputMonitoring: Bool = false
+    @Published public private(set) var fullDiskAccess: Bool = false
+    @Published public private(set) var developerTools: Bool = false
+    @Published public private(set) var appManagement: Bool = false
 
     public init() {
         guard let center = AskForPermission.sharedCenter() else { return }
         let state = center.statusState
         accessibility = state.isAccessibilityGranted
         screenRecording = state.isScreenRecordingGranted
+        inputMonitoring = state.isInputMonitoringGranted
+        fullDiskAccess = state.isFullDiskAccessGranted
+        developerTools = state.isDeveloperToolsGranted
+        appManagement = state.isAppManagementGranted
         state.$isAccessibilityGranted.assign(to: &$accessibility)
         state.$isScreenRecordingGranted.assign(to: &$screenRecording)
+        state.$isInputMonitoringGranted.assign(to: &$inputMonitoring)
+        state.$isFullDiskAccessGranted.assign(to: &$fullDiskAccess)
+        state.$isDeveloperToolsGranted.assign(to: &$developerTools)
+        state.$isAppManagementGranted.assign(to: &$appManagement)
     }
 
     public func status(for kind: PermissionKind) -> Bool {
         switch kind {
         case .accessibility: return accessibility
         case .screenRecording: return screenRecording
+        case .inputMonitoring: return inputMonitoring
+        case .fullDiskAccess: return fullDiskAccess
+        case .developerTools: return developerTools
+        case .appManagement: return appManagement
         }
     }
 }

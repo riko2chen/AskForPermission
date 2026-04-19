@@ -2,11 +2,28 @@
 
 [English](README.md) · [中文](README.zh.md)
 
-A macOS Swift package that delivers a polished onboarding flow for Accessibility and Screen Recording: open the correct System Settings pane, float a guide card beside it, and let the user drag the host app's icon into the permission list.
+A macOS Swift package that delivers a polished onboarding flow for macOS TCC permissions: open the correct System Settings pane, float a guide card beside it, and let the user drag the host app's icon into the permission list.
 
-For macOS app developers who need either of these two TCC permissions.
+For macOS app developers who need any TCC permission granted by dragging an app into a list.
+
+https://github.com/user-attachments/assets/8360c7a3-2546-4f8c-92d7-247ae460f5ce
 
 ![Demo](docs/assets/demo.gif)
+
+## Supported permissions
+
+Any Privacy & Security pane that follows the "drag app into a list" flow:
+
+| Permission | `PermissionKind` |
+|---|---|
+| Accessibility | `.accessibility` |
+| Screen & System Audio Recording | `.screenRecording` |
+| Input Monitoring | `.inputMonitoring` |
+| Full Disk Access | `.fullDiskAccess` |
+| Developer Tools | `.developerTools` |
+| App Management | `.appManagement` |
+
+Detection mechanics and out-of-scope permissions are covered in [`docs/architecture.md`](docs/architecture.md#supported-permissions).
 
 ## Compared to Codex Computer Use
 

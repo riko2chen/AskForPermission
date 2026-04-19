@@ -1,5 +1,28 @@
 # Architecture
 
+## Supported permissions
+
+The package covers the six Privacy & Security panes that use the "drag app into a list" interaction. Each one has a way to query authorization, plus a `x-apple.systempreferences:` URL that focuses the right pane.
+
+| Permission | `PermissionKind` | System Settings anchor | Status detection |
+|---|---|---|---|
+| Accessibility | `.accessibility` | `Privacy_Accessibility` | `AXIsProcessTrusted()` |
+| Screen & System Audio Recording | `.screenRecording` | `Privacy_ScreenCapture` | `CGPreflightScreenCaptureAccess()` |
+| Input Monitoring | `.inputMonitoring` | `Privacy_ListenEvent` | `IOHIDCheckAccess(.listenEvent)` |
+| Full Disk Access | `.fullDiskAccess` | `Privacy_AllFiles` | non-destructive read probe on a TCC-protected path |
+| Developer Tools | `.developerTools` | `Privacy_DevTools` | runtime-loaded `TCCAccessPreflight` SPI |
+| App Management | `.appManagement` | `Privacy_AppBundles` | runtime-loaded `TCCAccessPreflight` SPI |
+
+Developer Tools and App Management have no public preflight API. `TCCPrivateSPI.swift` resolves `TCCAccessPreflight` and the `kTCCService*` string constants at runtime via `dlopen`/`dlsym` on `/System/Library/PrivateFrameworks/TCC.framework/TCC`. No link-time dependency is added; if a future macOS removes the symbol every call returns `false` and the UI degrades to "not granted" rather than crashing.
+
+### Out of scope
+
+Three categories of macOS permission do not fit the drag-app pattern:
+
+- **Auto-populated request-style TCC** (Camera, Microphone, Location, Contacts, Calendar, Reminders, Photos, Bluetooth, Speech, HomeKit, Media Library). These panes only list an app after it has called the matching framework API, so there's no manual drag-to-add interaction to guide. Call the framework's own request (`AVCaptureDevice.requestAccess(for:)`, `CLLocationManager.requestWhenInUseAuthorization()`, etc.).
+- **Per-target nested lists** (Automation, Files and Folders). Each app has sub-entries (target app, target folder) instead of a flat drop target.
+- **PlugInKit extensions** (Finder, Share, Action extensions). Not TCC; enabled via a checkbox in System Settings → General → Login Items & Extensions.
+
 ## Entry points
 
 The `AskForPermission` enum is the public facade — non-throwing, single lazy shared center, covers AppKit (`request(_:from: NSView)`, `permissionsWindowController()`) and SwiftUI (`PermissionsView`, `.requestsPermission`, `.askForPermission(item:)`, `PermissionsObserver`, `statusUpdates(for:)`). The legacy `PermissionCenter` class is retained under the facade and still works; its throwing `init` is the only way to get back an instance directly.

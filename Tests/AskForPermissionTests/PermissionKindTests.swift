@@ -16,6 +16,34 @@ final class PermissionKindTests: XCTestCase {
         )
     }
 
+    func testInputMonitoringURLUsesModernPane() {
+        XCTAssertEqual(
+            PermissionKind.inputMonitoring.systemSettingsURL.absoluteString,
+            "x-apple.systempreferences:com.apple.settings.PrivacySecurity.extension?Privacy_ListenEvent"
+        )
+    }
+
+    func testFullDiskAccessURLUsesModernPane() {
+        XCTAssertEqual(
+            PermissionKind.fullDiskAccess.systemSettingsURL.absoluteString,
+            "x-apple.systempreferences:com.apple.settings.PrivacySecurity.extension?Privacy_AllFiles"
+        )
+    }
+
+    func testDeveloperToolsURLUsesModernPane() {
+        XCTAssertEqual(
+            PermissionKind.developerTools.systemSettingsURL.absoluteString,
+            "x-apple.systempreferences:com.apple.settings.PrivacySecurity.extension?Privacy_DevTools"
+        )
+    }
+
+    func testAppManagementURLUsesModernPane() {
+        XCTAssertEqual(
+            PermissionKind.appManagement.systemSettingsURL.absoluteString,
+            "x-apple.systempreferences:com.apple.settings.PrivacySecurity.extension?Privacy_AppBundles"
+        )
+    }
+
     func testAllCasesHaveDisplayName() {
         for kind in PermissionKind.allCases {
             XCTAssertFalse(kind.displayName.isEmpty)

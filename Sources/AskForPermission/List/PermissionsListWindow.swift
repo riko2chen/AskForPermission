@@ -4,8 +4,9 @@ import SwiftUI
 @MainActor
 final class PermissionsListWindow: NSWindow {
     init(state: PermissionStatusModel, flow: PermissionRequestFlowController) {
+        let size = PermissionsListRootView.rootSize
         super.init(
-            contentRect: NSRect(x: 0, y: 0, width: 520, height: 360),
+            contentRect: NSRect(x: 0, y: 0, width: size.width, height: size.height),
             styleMask: [.titled, .closable, .fullSizeContentView],
             backing: .buffered,
             defer: false

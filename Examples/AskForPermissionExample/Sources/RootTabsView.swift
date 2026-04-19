@@ -12,6 +12,6 @@ struct RootTabsView: View {
                 .tabItem { Label("AppKit", systemImage: "macwindow") }
         }
         .padding(12)
-        .frame(width: 640, height: 440)
+        .frame(width: 640, height: 720)
     }
 }

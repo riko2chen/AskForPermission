@@ -45,6 +45,10 @@ public enum AskForPermission {
 public final class PermissionsObserver: ObservableObject {
     @Published public private(set) var accessibility: Bool
     @Published public private(set) var screenRecording: Bool
+    @Published public private(set) var inputMonitoring: Bool
+    @Published public private(set) var fullDiskAccess: Bool
+    @Published public private(set) var developerTools: Bool
+    @Published public private(set) var appManagement: Bool
 
     public init()
     public func status(for kind: PermissionKind) -> Bool
@@ -79,6 +83,10 @@ extension View {
 public enum PermissionKind: String, CaseIterable, Sendable {
     case accessibility
     case screenRecording
+    case inputMonitoring
+    case fullDiskAccess
+    case developerTools
+    case appManagement
 
     public var displayName: String { get }
     public var shortDescription: String { get }

@@ -2,15 +2,32 @@
 
 [English](README.md) · [中文](README.zh.md)
 
-一个 macOS Swift 包，为 Accessibility 和 Screen Recording 两项 TCC 权限提供精致的引导流程：打开正确的系统设置页面，在设置窗口旁浮一张指引卡，让用户把宿主 app 的图标拖进权限列表。
+一个 macOS Swift 包，为 macOS TCC 权限提供引导流程：打开正确的系统设置页面，在设置窗口旁浮一张指引卡，让用户把宿主 app 的图标拖进权限列表。
 
-适合需要这两项权限的 macOS app 开发者。
+适合需要通过「把 app 拖进列表」完成授权的 macOS app 开发者。
+
+https://github.com/user-attachments/assets/8360c7a3-2546-4f8c-92d7-247ae460f5ce
 
 ![演示](docs/assets/demo.gif)
 
+## 支持范围
+
+系统设置「隐私与安全性」下任何采用「把 app 拖进列表」交互的面板：
+
+| 权限 | `PermissionKind` |
+|---|---|
+| Accessibility | `.accessibility` |
+| Screen & System Audio Recording | `.screenRecording` |
+| Input Monitoring | `.inputMonitoring` |
+| Full Disk Access | `.fullDiskAccess` |
+| Developer Tools | `.developerTools` |
+| App Management | `.appManagement` |
+
+授权检测机制和不在范围内的权限见 [`docs/architecture.md`](docs/architecture.md#supported-permissions)（英文）。
+
 ## 和 Codex Computer Use 的对照
 
-在视觉和交互上对齐 Codex Computer Use 的权限引导体验。实现层面在几个点上做了不同的取舍。
+视觉和交互沿用 Codex Computer Use 的权限引导体验。实现层面有几处取舍不同。
 
 **相同点**
 
@@ -27,7 +44,7 @@
 - 飞行两端无视觉空档（replicant 就位后源行才翻到 dashed 态）
 - 系统设置关闭或从 Dock 复原时，会等窗口 frame 稳定后再计算目标位置
 
-## 跑 example
+## 如何运行示例仓库
 
 clone 下来后，仓库自带一个 example app，在一个带 tab 的窗口里演示每一种接入方式（内置窗口 / SwiftUI / AppKit）。
 

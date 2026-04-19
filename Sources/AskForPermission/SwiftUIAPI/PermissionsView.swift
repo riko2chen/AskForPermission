@@ -30,6 +30,10 @@ public struct PermissionsView: View {
                 .foregroundStyle(.secondary)
         }
         .padding(28)
-        .frame(width: 520, height: 360, alignment: .topLeading)
+        .frame(
+            width: PermissionsListRootView.rootSize.width,
+            height: PermissionsListRootView.rootSize.height,
+            alignment: .topLeading
+        )
     }
 }
